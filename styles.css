@@ -1,0 +1,161 @@
+* {
+  /*Zerando pro margin e padding não influenciar na lagura das coisas*/
+  box-sizing: border-box; 
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh; /*Altura total da página*/
+  width: 100vw; /*Lagura total da página*/
+  background:black;/*cor da página*/
+}
+
+.board {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  /*Centraliza o bord*/
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  /*Centraliza a cell*/
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto); /*Dá três centrimetros de altura e implementa a largura que precisar*/
+}
+/*Faz com que as formas fiquem transparentes no hover*/
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after,
+.board.x .cell:not(.x):not(.circle):hover::before {
+  background: rgba(255, 255, 255, 0.3) !important; /*!important -- dá prioridade sobre o background do .cell*/
+}
+
+/* Célula */
+.cell {
+  border: 2px solid white; /*Cor das linhas do jogo*/
+
+  width: 100px;
+  height: 100px;
+  /*Centraliza os intems dentro do cell*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /*para o .x/.circulo::before e .x/.circulo::after não obedecerem ao fluxo da página*/
+}
+/*As células que já tiverem circulo ou x não vão pode ser selecionadas*/
+.cell.x,.cell.circle {
+  cursor: not-allowed;
+}
+/*nth-child(E) -- selecionar um elemento(E) em um grupo (cell)
+Removendo as bordas extras do top*/
+.cell:nth-child(1),.cell:nth-child(2),.cell:nth-child(3) {
+  border-top: none;
+}
+/*Removendo as bordas extras da esquerda*/
+
+.cell:nth-child(1),.cell:nth-child(4),.cell:nth-child(7) {
+  border-left: none;
+}
+
+/*Removendo as bordas extras de baixo*/
+.cell:nth-child(7),.cell:nth-child(8),.cell:nth-child(9) {
+  border-bottom: none;
+}
+
+/*Removendo as bordas extras direita*/
+.cell:nth-child(3),.cell:nth-child(6),.cell:nth-child(9) {
+  border-right: none;
+}
+
+/* X 
+Seleciona a clase que tem o x ".cell.x" */
+.cell.x::before,/* Perna esquerda*/
+.cell.x::after,/* Perna Direita*/
+/*Seleciona as divs .board (passa a classe x para o board e seleciona a cell que coresponde ao hover pra mostar)*/
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.x .cell:not(.x):not(.circle):hover::before {
+/*:not(.x e .circulo) delimita que as div que já tiverem a classe x ou cirulo não podem receber o hover circulo)*/
+content: "";
+  /*Seleciona tada área do cell*/
+  height: calc(100px * 0.15);/*15% da altura*/
+  width: calc(100px * 0.9);/*90% da lagura*/
+  background: white;
+  position: absolute;/*para o .x::before e .x::after não obedecerem ao fluxo da página com a implementação da linha 45*/
+}
+
+/*Roda o before*/
+.cell.x::before,
+/*Seleciona as divs .board (passa a classe x para o board e seleciona a cell que coresponde ao hover pra mostar)*/
+.board.x .cell:not(.x):not(.circle):hover::before {
+  transform: rotate(45deg);
+}
+/*Roda o after*/
+.cell.x::after,
+/*Seleciona as divs .board (passa a classe x para o board e seleciona a cell que coresponde ao hover pra mostar)*/
+.board.x .cell:not(.x):not(.circle):hover::after {
+  transform: rotate(-45deg);
+}
+
+/* Circle 
+Seleciona as divs .cell*/
+.cell.circle::before,
+.cell.circle::after,
+/*Seleciona as divs .board (passa a classe circulo para o board e seleciona a cell que coresponde ao hover pra mostar)*/
+.board.circle .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+/*:not(.x e .circulo) delimita que as div que já tiverem a classe x ou cirulo não podem receber o hover circulo)*/
+  content: "";
+  height: calc(100px * 0.9);/*90% da lagura*/
+  width: calc(100px * 0.9);/*90% da lagura*/
+  background: white;
+  position: absolute;/*para o .circulo::before e .circulo::after não obedecerem ao fluxo da página com a implementação da linha 45*/
+  border-radius: 50%;/*Pra ficar com formato de circulo*/
+}
+
+/* Mensagem de Vitória */
+.winning-message {
+  display: none;/*Não mostra a mensagem, ele é manipulado dinamicamente com o JS*/
+  /*Faz com que a mensagem vá para a frente de todo o arquivo*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /*Centraliza tudo*/
+  justify-content: center;
+  align-items: center;
+  /*Dá aquela tela cinza no fundo da mensagem*/
+  background-color: rgba(100, 99, 99, 0.8);
+  /*Faz com que os itens fiquem um em cima do outro*/
+  flex-direction: column;
+}
+/*Botão da mensagem de vencedor*/
+.winning-message-button {
+  font-size: 2.5rem;/*Tamanho do botão*/
+  background-color: rgba(65, 185, 131, 1); /*Cor de fundo do botão*/
+  color: white; /*Cor do texto que é exibido*/
+  cursor: pointer;
+  /*Estilização da borda*/
+  border-radius: 5px;
+  border: none;
+  /*Eslitização do espaço interno do texto*/
+  padding: 10px 15px;
+  margin-top: 16px;
+}
+/*Hover do botão*/
+.winning-message-button:hover {
+  color: rgba(65, 185, 131, 1);
+  background-color: white;
+}
+/*Texto do resultado do jogo*/
+.winning-message-text {
+  color: white; /*Cor da letra*/
+  font-size: 5rem; /*Tamanho da letra*/
+  font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; /*Fonte da letra*/
+}
+
+.show-winning-message {
+  display: flex;
+}
