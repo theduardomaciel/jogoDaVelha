@@ -8,11 +8,6 @@
     <title>Trabalho de Tópicos avançados</title>
   </head>
   <body>
-   <div class="inputName-message" data-inputName-message>
-      <p class="inputName-message-text" data-inputName-message-text></p>
-      <button class="cadastro-button" data-cadastro-button>Começar</button>
-    </div>
-
     <div class="board" data-board>
       <div class="cell" data-cell></div>
       <div class="cell" data-cell></div>
@@ -23,6 +18,14 @@
       <div class="cell" data-cell></div>
       <div class="cell" data-cell></div>
       <div class="cell" data-cell></div>
+    </div>
+    <!--Colocar as divs de mensagens em baico se não o board fica por cima-->
+    <div class="inputName" data-inputName>
+      <div class="inputName-text">
+        Player 1:<input id="playerX" data-inputName-playerUm-text>
+        Player 2:<input id="playerCirculo" data-inputName-playerDois-text>
+      </div>
+    <button class="cadastro-button" data-cadastro-button onclick="cadastro()">Jogar</button>
     </div>
 
     <div class="winning-message" data-winning-message>

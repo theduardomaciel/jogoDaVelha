@@ -159,7 +159,8 @@ Seleciona as divs .cell*/
 .show-winning-message {
   display: flex;
 }
-.inputName-message {
+/*StasMensage*/
+.inputName {
   display: none;/*Não mostra o formulario, ele é manipulado dinamicamente com o JS*/
   /*Faz com que o fomrulario vá para a frente de todo o arquivo*/
   position: fixed;
@@ -176,7 +177,7 @@ Seleciona as divs .cell*/
   flex-direction: column;
 }
 /*Botão da mensagem de star*/
-.inputName-message-button {
+.cadastro-button {
   font-size: 2.5rem;/*Tamanho do botão*/
   background-color: rgba(65, 185, 131, 1); /*Cor de fundo do botão*/
   color: white; /*Cor do texto que é exibido*/
@@ -189,17 +190,30 @@ Seleciona as divs .cell*/
   margin-top: 16px;
 }
 /*Hover do botão*/
-.inputName-message-button:hover {
+.cadastro-button:hover {
   color: rgba(65, 185, 131, 1);
   background-color: white;
 }
 /*Texto que pega os nomes dos jogadores*/
-.inputName-message-text {
+.inputName-text {
+  display: grid;
+  justify-items: center;
   color: white; /*Cor da letra*/
   font-size: 5rem; /*Tamanho da letra*/
   font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; /*Fonte da letra*/
 }
-
-.show-inputName-message {
+.inputName input{
+  text-align:center;
+  font-weight: 600;
+  color:white;
+  width: 280px;
+  font-size: 2.5rem;
+  border-radius: 5px;
+  border: none;
+  padding: 10px 15px;
+  margin-top: 16px;
+  background-color:rgb(65 185 131 / 70%);
+}
+.show-inputName {
   display: flex;
 }

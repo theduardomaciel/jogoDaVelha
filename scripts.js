@@ -12,13 +12,16 @@ const restartButton = document.querySelector("[data-restart-button]");
 /*Seleciona todos as divs que tem essa classe, logo todos os restart-button
 
 Ligação com os inputs de nome*/
-const inputNameTextElement = document.querySelector("[data-inputName-message-text]");
+const inputNameTextElement = document.querySelector("[data-inputName]");
 //Seleciona todos as divs que tem essa classe, logo todos os inputName-message-text
-const inputNameMessage = document.querySelector("[data-inputName-message]");
-//Seleciona todos as divs que tem essa classe, logo todos os inputName-message
+const inputNamePlayerUm = document.querySelector("[data-inputName-playerUm]");
+//Seleciona todos as divs que tem essa classe, logo todos os inputName-playerUm
+const inputNamePlayerDois= document.querySelector("[data-inputName-playerDois]");
+//Seleciona todos as divs que tem essa classe, logo todos os inputName-playerUm
 const cadastroButton = document.querySelector("[data-cadastro-button]");
 //Seleciona todos as divs que tem essa classe, logo todos os cadastro-button
-
+let playerUm;
+let playerDois;
 let vezDoCirculo;//É a vez do circulo ?
 
 const winningCombinations = [
@@ -38,12 +41,17 @@ const winningCombinations = [
   [0, 4, 8],//Diagonal principal
   [2, 4, 6],//Diagonal secundaria
 ];
-function mensagemStarGame(nomeUm,nomeDois){
-  inputNameMessage.classList.remove("show-inputName-message")
+function cadastro(){
+    //Mostra tela para informar nome dos jogadores
+    inputNameTextElement.classList.add("show-inputName");
+    //Quando cadastro for adicionar, mensagem vencedor vai ser remover
+    cadastroButton.addEventListener("click", startGame);
+    playerUm=document.getElementById('playerX').value;
+    playerDois=document.getElementById('playerCirculo').value;
+    winningMessage.classList.remove("show-winning-message");
+    console.log(playerUm , playerDois);
 }
 const startGame = () => {
- // mensagemStarGame(nomeUm,nomeDois);
-
   vezDoCirculo = false;
 //Para (Instaceia uma variavel) da estrutura que eu quero percorrer [OBS.: for of retorna o valor da possição || for in retorna apenas as posições]
   for (const cell of cellElements) {
@@ -55,6 +63,8 @@ const startGame = () => {
   }
 
   setBoardHoverClass();
+  //Quando mensagem vencedor for adicionar, cadastro vai ser remover
+  inputNameTextElement.classList.remove("show-inputName");
   winningMessage.classList.remove("show-winning-message");
 };
 //Mensagem no final do jogo
@@ -63,8 +73,8 @@ const encerraPartida = (isDraw) => {
     winningMessageTextElement.innerText = "Empate!";
   } else {
     winningMessageTextElement.innerText = vezDoCirculo
-      ? "O Venceu!"
-      : "X Venceu!";
+      ? playerDois+" Venceu!"
+      : playerUm+" Venceu!";
   }
 
   winningMessage.classList.add("show-winning-message");
@@ -127,7 +137,6 @@ const handleClick = (e) => {
     mudarJogador();
   }
 };
+cadastro();
 
-startGame();
-
-restartButton.addEventListener("click", startGame);
+restartButton.addEventListener("click", cadastro);
