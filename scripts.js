@@ -45,13 +45,13 @@ function cadastro(){
     //Mostra tela para informar nome dos jogadores
     inputNameTextElement.classList.add("aparecer");
     //Quando cadastro for adicionar, mensagem vencedor vai ser remover
-    cadastroButton.addEventListener("click", coemcoJogo);
+    cadastroButton.addEventListener("click", comecoJogo);
     playerUm=document.getElementById('playerX').value;
     playerDois=document.getElementById('playerCirculo').value;
     mensagemVitoria.classList.remove("aparecer");
     console.log(playerUm , playerDois);
 }
-const coemcoJogo = () => {
+const comecoJogo = () => {
   vezDoCirculo = false;
 //Para (Instaceia uma variavel) da estrutura que eu quero percorrer [OBS.: for of retorna o valor da possição || for in retorna apenas as posições]
   for (const posicoes of posicoesElemento) {
@@ -68,7 +68,7 @@ const coemcoJogo = () => {
   mensagemVitoria.classList.remove("aparecer");
 };
 //Mensagem no final do jogo
-const encerraPartida = (empate) => {
+function encerraPartida (empate){
   if (empate) {
     elementoTextoMensagemVencedor.innerText = "Empate!";
   } else {
@@ -80,15 +80,19 @@ const encerraPartida = (empate) => {
   mensagemVitoria.classList.add("aparecer");
 };
 
-const procurarPorVitoria = (jogadorAtual) => {
+function procurarPorVitoria (jogadorAtual) {
   return combinacoesVitoria.some((combination) => {
     return combination.every((index) => {
       return posicoesElemento[index].classList.contains(jogadorAtual);
     });
   });
 };
-
-const procurarPorEmpate = () => {
+/*Arrow functions - funções de seta
+  Outra forma de estruturar uma função é declaranco como variavél:
+        nome = () => ação 
+  Geralmente são funções anonimas || Não precisam do igual
+*/
+function procurarPorEmpate () {
   return [...posicoesElemento].every((posicoes) => {
     return posicoes.classList.contains("x") || posicoes.classList.contains("circulo");
   });
@@ -115,7 +119,7 @@ const mudarJogador = () => {
   definirHoverDoTabuleiro();
 };
 
-const lidarClick = (e) => {
+function lidarClick(e) {
   // Colocar a marca (X ou Círculo)
   const posicoes = e.target;
   const adicionarClasse = vezDoCirculo ? "circulo" : "x"; //If e Else; verifica se é a vez do circula é adiciona a calsse corespondente
