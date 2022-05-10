@@ -8,29 +8,29 @@
     <title>Trabalho de Tópicos avançados</title>
   </head>
   <body>
-    <div class="board" data-board>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
-      <div class="cell" data-cell></div>
+    <div class="tabuleiro" data-tabuleiro>
+      <div class="posicoes" data-posicoes></div>
+      <div class="posicoes" data-posicoes></div>
+      <div class="posicoes" data-posicoes></div>
+      <div class="posicoes" data-posicoes></div>
+      <div class="posicoes" data-posicoes></div>
+      <div class="posicoes" data-posicoes></div>
+      <div class="posicoes" data-posicoes></div>
+      <div class="posicoes" data-posicoes></div>
+      <div class="posicoes" data-posicoes></div>
     </div>
-    <!--Colocar as divs de mensagens em baico se não o board fica por cima-->
+    <!--Colocar as divs de mensagens em baico se não o tabuleiro fica por cima-->
     <div class="inputName" data-inputName>
       <div class="inputName-text">
-        Player 1:<input id="playerX" data-inputName-playerUm-text>
-        Player 2:<input id="playerCirculo" data-inputName-playerDois-text>
+        Player 1 (X):<input id="playerX" data-inputName-playerUm-text>
+        Player 2 (O):<input id="playerCirculo" data-inputName-playerDois-text>
       </div>
     <button class="cadastro-button" data-cadastro-button onclick="cadastro()">Jogar</button>
     </div>
 
-    <div class="winning-message" data-winning-message>
-      <p class="winning-message-text" data-winning-message-text></p>
-      <button class="winning-message-button" data-restart-button>Reiniciar!</button>
+    <div class="mensagem-vitoria" data-mensagem-vitoria>
+      <p class="texto-mensagem-vitoria" data-texto-mensagem-vitoria></p>
+      <button class="mensagem-vitoria-button" data-restart-button>Reiniciar!</button>
     </div>
     <script src="scripts.js"></script>
   </body>

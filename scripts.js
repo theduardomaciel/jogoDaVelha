@@ -1,13 +1,13 @@
-const cellElements = document.querySelectorAll("[data-cell]"); 
-//Seleciona todos as divs que tem essa classe, logo todos os cell
-const board = document.querySelector("[data-board]");
-/*Seleciona todos as divs que tem essa classe, logo todos os boards
+const posicoesElemento = document.querySelectorAll("[data-posicoes]"); 
+//Seleciona todos as divs que tem essa classe, logo todos os posicoes
+const tabuleiro = document.querySelector("[data-tabuleiro]");
+/*Seleciona todos as divs que tem essa classe, logo todos os tabuleiros
 
 Ligação com a mensagem devitporia ou empete*/
-const winningMessageTextElement = document.querySelector("[data-winning-message-text]");
-//Seleciona todos as divs que tem essa classe, logo todos os winning-message-text
-const winningMessage = document.querySelector("[data-winning-message]");
-//Seleciona todos as divs que tem essa classe, logo todos os winning-message
+const elementoTextoMensagemVencedor = document.querySelector("[data-texto-mensagem-vitoria]");
+//Seleciona todos as divs que tem essa classe, logo todos os texto-mensagem-vitoria
+const mensagemVitoria = document.querySelector("[data-mensagem-vitoria]");
+//Seleciona todos as divs que tem essa classe, logo todos os mensagem-vitoria
 const restartButton = document.querySelector("[data-restart-button]");
 /*Seleciona todos as divs que tem essa classe, logo todos os restart-button
 
@@ -24,7 +24,7 @@ let playerUm;
 let playerDois;
 let vezDoCirculo;//É a vez do circulo ?
 
-const winningCombinations = [
+const combinacoesVitoria = [
   /*Combinações que leva um jogador a ganhar,
    caso nenhuma delas esteja no resultado sera contabilizado empate
        A  B  C      
@@ -43,94 +43,94 @@ const winningCombinations = [
 ];
 function cadastro(){
     //Mostra tela para informar nome dos jogadores
-    inputNameTextElement.classList.add("show-inputName");
+    inputNameTextElement.classList.add("aparecer");
     //Quando cadastro for adicionar, mensagem vencedor vai ser remover
-    cadastroButton.addEventListener("click", startGame);
+    cadastroButton.addEventListener("click", coemcoJogo);
     playerUm=document.getElementById('playerX').value;
     playerDois=document.getElementById('playerCirculo').value;
-    winningMessage.classList.remove("show-winning-message");
+    mensagemVitoria.classList.remove("aparecer");
     console.log(playerUm , playerDois);
 }
-const startGame = () => {
+const coemcoJogo = () => {
   vezDoCirculo = false;
 //Para (Instaceia uma variavel) da estrutura que eu quero percorrer [OBS.: for of retorna o valor da possição || for in retorna apenas as posições]
-  for (const cell of cellElements) {
-    cell.classList.remove("circle");
-    cell.classList.remove("x");
-    cell.removeEventListener("click", handleClick);
-    cell.addEventListener("click", handleClick, { once: true });
+  for (const posicoes of posicoesElemento) {
+    posicoes.classList.remove("circulo");
+    posicoes.classList.remove("x");
+    posicoes.removeEventListener("click", lidarClick);
+    posicoes.addEventListener("click", lidarClick, { once: true });
                                                  //once - responsavel por não adiconar uma classe quando já tiver
   }
 
-  setBoardHoverClass();
+  definirHoverDoTabuleiro();
   //Quando mensagem vencedor for adicionar, cadastro vai ser remover
-  inputNameTextElement.classList.remove("show-inputName");
-  winningMessage.classList.remove("show-winning-message");
+  inputNameTextElement.classList.remove("aparecer");
+  mensagemVitoria.classList.remove("aparecer");
 };
 //Mensagem no final do jogo
-const encerraPartida = (isDraw) => {
-  if (isDraw) {
-    winningMessageTextElement.innerText = "Empate!";
+const encerraPartida = (empate) => {
+  if (empate) {
+    elementoTextoMensagemVencedor.innerText = "Empate!";
   } else {
-    winningMessageTextElement.innerText = vezDoCirculo
+    elementoTextoMensagemVencedor.innerText = vezDoCirculo
       ? playerDois+" Venceu!"
       : playerUm+" Venceu!";
   }
 
-  winningMessage.classList.add("show-winning-message");
+  mensagemVitoria.classList.add("aparecer");
 };
 
-const checkForWin = (currentPlayer) => {
-  return winningCombinations.some((combination) => {
+const procurarPorVitoria = (jogadorAtual) => {
+  return combinacoesVitoria.some((combination) => {
     return combination.every((index) => {
-      return cellElements[index].classList.contains(currentPlayer);
+      return posicoesElemento[index].classList.contains(jogadorAtual);
     });
   });
 };
 
-const checkForDraw = () => {
-  return [...cellElements].every((cell) => {
-    return cell.classList.contains("x") || cell.classList.contains("circle");
+const procurarPorEmpate = () => {
+  return [...posicoesElemento].every((posicoes) => {
+    return posicoes.classList.contains("x") || posicoes.classList.contains("circulo");
   });
 };
 
-function placeMark (cell, classToAdd) {
-  cell.classList.add(classToAdd);
+function alteradorClasse (posicoes, adicionarClasse) {
+  posicoes.classList.add(adicionarClasse);
 };
 //Pesquisar qual a diferença de estrutura
-function setBoardHoverClass ()  {
+function definirHoverDoTabuleiro ()  {
   //Remove a classe anterior antes de adicionar uma nova
-  board.classList.remove("circle");
-  board.classList.remove("x");
+  tabuleiro.classList.remove("circulo");
+  tabuleiro.classList.remove("x");
   //Faz uma verificação é adiciona uma classe
   if (vezDoCirculo) {
-    board.classList.add("circle");
+    tabuleiro.classList.add("circulo");
   } else {
-    board.classList.add("x");
+    tabuleiro.classList.add("x");
   }
 };
 
 const mudarJogador = () => {
   vezDoCirculo = !vezDoCirculo;
-  setBoardHoverClass();
+  definirHoverDoTabuleiro();
 };
 
-const handleClick = (e) => {
+const lidarClick = (e) => {
   // Colocar a marca (X ou Círculo)
-  const cell = e.target;
-  const classToAdd = vezDoCirculo ? "circle" : "x"; //If e Else; verifica se é a vez do circula é adiciona a calsse corespondente
+  const posicoes = e.target;
+  const adicionarClasse = vezDoCirculo ? "circulo" : "x"; //If e Else; verifica se é a vez do circula é adiciona a calsse corespondente
 
-  placeMark(cell, classToAdd); //Chama a função
+  alteradorClasse(posicoes, adicionarClasse); //Chama a função
 
   // Verificar por vitória
-  const vencedor = checkForWin(classToAdd);
+  const vencedor = procurarPorVitoria(adicionarClasse);
 
   // Verificar por empate
-  const isDraw = checkForDraw();
+  const empate = procurarPorEmpate();
 
   if (vencedor) {
     encerraPartida(false);
-  } else if (isDraw) {
+  } else if (empate) {
     encerraPartida(true);
   } else {
     // Mudar jogador
