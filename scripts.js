@@ -6,7 +6,7 @@ const tabuleiro = document.querySelector("[data-tabuleiro]");
 Ligação com a mensagem devitporia ou empete*/
 const elementoTextoMensagemVencedor = document.querySelector("[data-texto-mensagem-vitoria]");
 //Seleciona todos as divs que tem essa classe, logo todos os texto-mensagem-vitoria
-const mensagemVitoria = document.querySelector("[data-mensagem-vitoria]");
+const mensagemVitoria = document.querySelector("[data-pagina-vitoria]");
 //Seleciona todos as divs que tem essa classe, logo todos os mensagem-vitoria
 const restartButton = document.querySelector("[data-restart-button]");
 /*Seleciona todos as divs que tem essa classe, logo todos os restart-button
