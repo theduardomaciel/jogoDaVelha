@@ -14,10 +14,6 @@ const restartButton = document.querySelector("[data-restart-button]");
 Ligação com os inputs de nome*/
 const inputNameTextElement = document.querySelector("[data-inputName]");
 //Seleciona todos as divs que tem essa classe, logo todos os inputName-message-text
-const inputNamePlayerUm = document.querySelector("[data-inputName-playerUm]");
-//Seleciona todos as divs que tem essa classe, logo todos os inputName-playerUm
-const inputNamePlayerDois= document.querySelector("[data-inputName-playerDois]");
-//Seleciona todos as divs que tem essa classe, logo todos os inputName-playerUm
 const cadastroButton = document.querySelector("[data-cadastro-button]");
 //Seleciona todos as divs que tem essa classe, logo todos os cadastro-button
 let playerUm;
