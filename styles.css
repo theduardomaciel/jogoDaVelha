@@ -115,7 +115,7 @@ Seleciona as divs .posicoes*/
 }
 
 /* Mensagem de Vitória */
-.mensagem-vitoria {
+.pagina {
   display: none;/*Não mostra a mensagem, ele é manipulado dinamicamente com o JS*/
   /*Faz com que a mensagem vá para a frente de todo o arquivo*/
   position: fixed;
@@ -131,21 +131,8 @@ Seleciona as divs .posicoes*/
   /*Faz com que os itens fiquem um em cima do outro*/
   flex-direction: column;
 }
-/*Botão da mensagem de vencedor*/
-.mensagem-vitoria-button {
-  font-size: 2.5rem;/*Tamanho do botão*/
-  background-color: rgba(65, 185, 131, 1); /*Cor de fundo do botão*/
-  color: white; /*Cor do texto que é exibido*/
-  cursor: pointer;
-  /*Estilização da borda*/
-  border-radius: 5px;
-  border: none;
-  /*Eslitização do espaço interno do texto*/
-  padding: 10px 15px;
-  margin-top: 16px;
-}
 /*Hover do botão*/
-.mensagem-vitoria-button:hover {
+.button:hover {
   color: rgba(65, 185, 131, 1);
   background-color: white;
 }
@@ -155,25 +142,9 @@ Seleciona as divs .posicoes*/
   font-size: 5rem; /*Tamanho da letra*/
   font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; /*Fonte da letra*/
 }
-/*StasMensage*/
-.inputName {
-  display: none;/*Não mostra o formulario, ele é manipulado dinamicamente com o JS*/
-  /*Faz com que o fomrulario vá para a frente de todo o arquivo*/
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /*Centraliza tudo*/
-  justify-content: center;
-  align-items: center;
-  /*Dá aquela tela cinza no fundo da mensagem*/
-  background-color: rgba(100, 99, 99, 0.8);
-  /*Faz com que os itens fiquem um em cima do outro*/
-  flex-direction: column;
-}
-/*Botão da mensagem de star*/
-.cadastro-button {
+/*StasMensage
+Botão da mensagem de star*/
+.button {
   font-size: 2.5rem;/*Tamanho do botão*/
   background-color: rgba(65, 185, 131, 1); /*Cor de fundo do botão*/
   color: white; /*Cor do texto que é exibido*/
@@ -184,11 +155,6 @@ Seleciona as divs .posicoes*/
   /*Eslitização do espaço interno do texto*/
   padding: 10px 15px;
   margin-top: 16px;
-}
-/*Hover do botão*/
-.cadastro-button:hover {
-  color: rgba(65, 185, 131, 1);
-  background-color: white;
 }
 /*Texto que pega os nomes dos jogadores*/
 .inputName-text {
@@ -199,7 +165,7 @@ Seleciona as divs .posicoes*/
   font-size: 5rem; /*Tamanho da letra*/
   font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; /*Fonte da letra*/
 }
-.inputName input{
+.pagina input{
   text-align:center;
   font-weight: 600;
   color:white;
