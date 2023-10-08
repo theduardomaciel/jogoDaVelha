@@ -28,7 +28,7 @@ body {
 .tabuleiro.x .posicoes:not(.x):not(.circulo):hover::before,
 .tabuleiro.circulo .posicoes:not(.x):not(.circulo):hover::after,
 .tabuleiro.x .posicoes:not(.x):not(.circulo):hover::before {
-  background: #73b387 !important; /*!important -- dá prioridade sobre o background do .posicoes*/
+  background: rgb(253 253 253 / 32%) !important; /*!important -- dá prioridade sobre o background do .posicoes*/
 }
 
 /* Célula */
@@ -113,7 +113,6 @@ Seleciona as divs .posicoes*/
   border-radius: 50%;/*Pra ficar com formato de circulo*/
 }
 .infGame {
-  display: none;
   height: 10%;
   justify-content: space-evenly;
   margin: 1rem;
@@ -121,7 +120,7 @@ Seleciona as divs .posicoes*/
 .conteiner-infGame{
   width: 100%;
   text-align: center;
-  color: #73b387;
+  color: #ffffff;
   font-size: 1.8rem;
   font-weight: 600;
   font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
@@ -145,12 +144,12 @@ Seleciona as divs .posicoes*/
 }
 /*Hover do botão*/
 .button:hover {
-  color: rgba(65, 185, 131, 1);
-  background-color: #73b387;
+  color: #73b387;
+  background-color: #ffffff;
 }
 /*Texto do resultado do jogo*/
 .texto-mensagem-vitoria {
-  color: white; /*Cor da letra*/
+  color: #ffffff; /*Cor da letra*/
   font-size: 5rem; /*Tamanho da letra*/
   font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; /*Fonte da letra*/
 }
@@ -158,8 +157,8 @@ Seleciona as divs .posicoes*/
 Botão da mensagem de star*/
 .button {
   font-size: 2.5rem;/*Tamanho do botão*/
-  background-color: rgba(65, 185, 131, 1); /*Cor de fundo do botão*/
-  color: white; /*Cor do texto que é exibido*/
+  background-color: #73b387; /*Cor de fundo do botão*/
+  color: #ffffff; /*Cor do texto que é exibido*/
   cursor: pointer;
   /*Estilização da borda*/
   border-radius: 5px;
@@ -175,30 +174,31 @@ Botão da mensagem de star*/
   font-weight: 600;
   display: grid;
   justify-items: center;
-  color: white; /*Cor da letra*/
+  color: #ffffff; /*Cor da letra*/
   font-size: xxx-large; /*Tamanho da letra*/
   font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; /*Fonte da letra*/
 }
 .pagina input{
   text-align:center;
   font-weight: 600;
-  color:white;
+  color: #ffffff;
   width: 280px;
   font-size: 2.5rem;
   border-radius: 5px;
   border: none;
   padding: 10px 15px;
   margin-top: 16px;
-  background-color:rgb(65 185 131 / 70%);
+  background-color:rgb(253 253 253 / 32%);
 }
 .aparecer {
-  display: flex;
+  display: flex !important;
+  transition: 500ms linear;
 }
 .jogadorVez{
-  transition: 450ms linear;
-  color: white;
+  transition: 500ms linear;
+  color: #00ff50;
   border-radius: 10cm;
-  background: #73b387a6;
+  background: rgb(83 100 91);
   height: fit-content;
   box-shadow: 2px 1px 20px 3px rgb(253 253 253 / 32%);
 }

@@ -41,15 +41,24 @@ const combinacoesVitoria = [
     3.[6, 7, 8]*/
 
   [0, 1, 2],//linha 1
-  [3, 4, 5],//linha 2
-  [6, 7, 8],//linha 3
   [0, 3, 6],//Coluna A
-  [1, 4, 7],//Coluna B
-  [2, 5, 8],//Coluna C
   [0, 4, 8],//Diagonal principal
+  
+  [1, 4, 7],//Coluna B
+  
+  [2, 5, 8],//Coluna C
   [2, 4, 6],//Diagonal secundaria
-];
+
+  [3, 4, 5],//linha 2
+
+  [6, 7, 8],//linha 3
+
+];  
 function cadastro(){
+    for (const posicoes of posicoesElemento) {
+      posicoes.classList.remove("circulo");
+      posicoes.classList.remove("x");
+    }
     //Mostra tela para informar nome dos jogadores
     inputNameTextElement.classList.add("aparecer");
     //Quando cadastro for adicionar, mensagem vencedor vai ser remover
@@ -76,13 +85,10 @@ const comecoJogo = () => {
   vezDoCirculo = false;
 //Para (Instaceia uma variavel) da estrutura que eu quero percorrer [OBS.: for of retorna o valor da possição || for in retorna apenas as posições]
   for (const posicoes of posicoesElemento) {
-    posicoes.classList.remove("circulo");
-    posicoes.classList.remove("x");
     posicoes.removeEventListener("click", lidarClick);
     posicoes.addEventListener("click", lidarClick, { once: true });
     //once - responsavel por não adiconar uma classe quando já tiver
   }
-
   definirHoverDoTabuleiro();
   //Quando mensagem vencedor for adicionar, cadastro vai ser remover
   inputNameTextElement.classList.remove("aparecer");
