@@ -6,15 +6,14 @@
 }
 
 body {
-  height: 100vh; /*Altura total da página*/
-  width: 100vw; /*Lagura total da página*/
+  height: 95vh; /*Altura total da página*/
   background:black;/*cor da página*/
 }
 
 .tabuleiro {
   display: grid;
   width: 100%;
-  height: 100%;
+  height: 87%;
   /*Centraliza o bord*/
   display: grid;
   justify-content: center;
@@ -29,12 +28,12 @@ body {
 .tabuleiro.x .posicoes:not(.x):not(.circulo):hover::before,
 .tabuleiro.circulo .posicoes:not(.x):not(.circulo):hover::after,
 .tabuleiro.x .posicoes:not(.x):not(.circulo):hover::before {
-  background: rgba(255, 255, 255, 0.3) !important; /*!important -- dá prioridade sobre o background do .posicoes*/
+  background: #73b387 !important; /*!important -- dá prioridade sobre o background do .posicoes*/
 }
 
 /* Célula */
 .posicoes {
-  border: 2px solid white; /*Cor das linhas do jogo*/
+  border: 2px solid #73b387; /*Cor das linhas do jogo*/
 
   width: 100px;
   height: 100px;
@@ -81,7 +80,7 @@ content: "";
   /*Seleciona tada área do posicoes*/
   height: calc(100px * 0.15);/*15% da altura*/
   width: calc(100px * 0.9);/*90% da lagura*/
-  background: white;
+  background: #73b387;
   position: absolute;/*para o .x::before e .x::after não obedecerem ao fluxo da página com a implementação da linha 45*/
 }
 
@@ -109,11 +108,24 @@ Seleciona as divs .posicoes*/
   content: "";
   height: calc(100px * 0.9);/*90% da lagura*/
   width: calc(100px * 0.9);/*90% da lagura*/
-  background: white;
+  background: #73b387;
   position: absolute;/*para o .circulo::before e .circulo::after não obedecerem ao fluxo da página com a implementação da linha 45*/
   border-radius: 50%;/*Pra ficar com formato de circulo*/
 }
-
+.infGame {
+  display: none;
+  height: 10%;
+  justify-content: space-evenly;
+  margin: 1rem;
+}
+.conteiner-infGame{
+  width: 100%;
+  text-align: center;
+  color: #73b387;
+  font-size: 1.8rem;
+  font-weight: 600;
+  font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+}
 /* Mensagem de Vitória */
 .pagina {
   display: none;/*Não mostra a mensagem, ele é manipulado dinamicamente com o JS*/
@@ -127,14 +139,14 @@ Seleciona as divs .posicoes*/
   justify-content: center;
   align-items: center;
   /*Dá aquela tela cinza no fundo da mensagem*/
-  background-color: rgba(100, 99, 99, 0.8);
+  background-color: rgb(5 45 24 / 58%);
   /*Faz com que os itens fiquem um em cima do outro*/
   flex-direction: column;
 }
 /*Hover do botão*/
 .button:hover {
   color: rgba(65, 185, 131, 1);
-  background-color: white;
+  background-color: #73b387;
 }
 /*Texto do resultado do jogo*/
 .texto-mensagem-vitoria {
@@ -157,12 +169,14 @@ Botão da mensagem de star*/
   margin-top: 16px;
 }
 /*Texto que pega os nomes dos jogadores*/
-.inputName-text {
+.text-show {
+  width: 100%;
+  text-align: center;
   font-weight: 600;
   display: grid;
   justify-items: center;
   color: white; /*Cor da letra*/
-  font-size: 5rem; /*Tamanho da letra*/
+  font-size: xxx-large; /*Tamanho da letra*/
   font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; /*Fonte da letra*/
 }
 .pagina input{
@@ -179,4 +193,12 @@ Botão da mensagem de star*/
 }
 .aparecer {
   display: flex;
+}
+.jogadorVez{
+  transition: 450ms linear;
+  color: white;
+  border-radius: 10cm;
+  background: #73b387a6;
+  height: fit-content;
+  box-shadow: -1px -1px 14px 20px rgb(253 253 253);
 }

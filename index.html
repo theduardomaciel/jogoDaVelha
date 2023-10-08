@@ -8,6 +8,16 @@
     <title>Trabalho de Tópicos avançados</title>
   </head>
   <body>
+    <div class="infGame" data-inf-game>
+      <div class="conteiner-infGame" data-inf-jogadorUm>
+        <label for="nome-jogadorX">Player 1 (X):</label>
+        <p class="nome-jogadorX" data-nome-jogadorUm></p> 
+      </div>
+      <div class="conteiner-infGame" data-inf-jogadorDois>
+        <label for="nome-jogadorCirculo">Player 2 (O):</label>
+        <p class="nome-jogadorCirculo" data-nome-jogadorDois></p>
+      </div>
+    </div>
     <div class="tabuleiro" data-tabuleiro>
       <div class="posicoes" data-posicoes></div>
       <div class="posicoes" data-posicoes></div>
@@ -19,17 +29,20 @@
       <div class="posicoes" data-posicoes></div>
       <div class="posicoes" data-posicoes></div>
     </div>
-    <!--Colocar as divs de mensagens em baico se não o tabuleiro fica por cima-->
+    <!--Colocar as divs de mensagens em baixo se não o tabuleiro fica por cima-->
     <div class="pagina" data-inputName>
-      <div class="inputName-text">
-        Player 1 (X):<input id="playerX" data-inputName-playerUm-text>
-        Player 2 (O):<input id="playerCirculo" data-inputName-playerDois-text>   
+      <div class="text-show">
+        <label for="playerX">Player 1 (X):</label>
+        <input id="playerX" data-inputName-playerUm-text>
+        <label for="playerCirculo">Player 2 (O):</label>
+        <input id="playerCirculo" data-inputName-playerDois-text>   
       </div>
     <button class="button" data-cadastro-button onclick="cadastro()">Jogar</button>
     </div>
-
     <div class="pagina" data-pagina-vitoria>
-      <p class="texto-mensagem-vitoria" data-texto-mensagem-vitoria></p>
+      <div class="text-show">
+        <label data-texto-mensagem-vitoria></label>
+      </div>
       <button class="button" data-restart-button>Reiniciar!</button>
     </div>
     <script src="scripts.js"></script>

@@ -16,6 +16,18 @@ const inputNameTextElement = document.querySelector("[data-inputName]");
 //Seleciona todos as divs que tem essa classe, logo todos os inputName-message-text
 const cadastroButton = document.querySelector("[data-cadastro-button]");
 //Seleciona todos as divs que tem essa classe, logo todos os cadastro-button
+
+const playerX = document.querySelector("[data-nome-jogadorUm]");
+//Seleciona todos as divs que tem essa classe, logo todos os playerX
+const playerCirculo = document.querySelector("[data-nome-jogadorDois]");
+//Seleciona todos as divs que tem essa classe, logo todos os playerCirculo
+const divInfGame = document.querySelector("[data-inf-game]");
+//Seleciona todos as divs que tem essa classe, logo todos os inf-game
+const infJogadorUm = document.querySelector("[data-inf-jogadorUm]");
+//Seleciona todos as divs que tem essa classe, logo todos os inf-jogadorUm
+const infJogadorDois = document.querySelector("[data-inf-jogadorDois]");
+//Seleciona todos as divs que tem essa classe, logo todos os inf-jogadorDois
+
 let playerUm;
 let playerDois;
 let vezDoCirculo;//É a vez do circulo ?
@@ -42,12 +54,25 @@ function cadastro(){
     inputNameTextElement.classList.add("aparecer");
     //Quando cadastro for adicionar, mensagem vencedor vai ser remover
     cadastroButton.addEventListener("click", comecoJogo);
-    playerUm=document.getElementById('playerX').value;
-    playerDois=document.getElementById('playerCirculo').value;
+    playerUm=document.getElementById('playerX').value!==''?document.getElementById('playerX').value:'Jogador X';
+    playerDois=document.getElementById('playerCirculo').value!=''?document.getElementById('playerCirculo').value:'Jogador O';
     mensagemVitoria.classList.remove("aparecer");
-    console.log(playerUm , playerDois);
+    //console.log(playerUm , playerDois);
+    mostrarJogadores();
 }
+//Função dedicada a melhorar a jogabiliadade mostrando quem são os jogadores
+function mostrarJogadores(){
+  playerX.textContent=playerUm;
+  playerCirculo.textContent=playerDois;
+  }
+/*
+function ativarJogador(){
+  playerX.classList.toggle('jogador-ativo');
+  playerCirculo.classList.toggle('jogador-ativo');
+}
+*/
 const comecoJogo = () => {
+  divInfGame.classList.add("aparecer");
   vezDoCirculo = false;
 //Para (Instaceia uma variavel) da estrutura que eu quero percorrer [OBS.: for of retorna o valor da possição || for in retorna apenas as posições]
   for (const posicoes of posicoesElemento) {
@@ -55,7 +80,7 @@ const comecoJogo = () => {
     posicoes.classList.remove("x");
     posicoes.removeEventListener("click", lidarClick);
     posicoes.addEventListener("click", lidarClick, { once: true });
-                                                 //once - responsavel por não adiconar uma classe quando já tiver
+    //once - responsavel por não adiconar uma classe quando já tiver
   }
 
   definirHoverDoTabuleiro();
@@ -65,6 +90,7 @@ const comecoJogo = () => {
 };
 //Mensagem no final do jogo
 function encerraPartida (empate){
+  divInfGame.classList.remove("aparecer");
   if (empate) {
     elementoTextoMensagemVencedor.innerText = "Empate!";
   } else {
@@ -100,12 +126,16 @@ function alteradorClasse (posicoes, adicionarClasse) {
 //Pesquisar qual a diferença de estrutura
 function definirHoverDoTabuleiro ()  {
   //Remove a classe anterior antes de adicionar uma nova
+  infJogadorDois.classList.remove("jogadorVez");
   tabuleiro.classList.remove("circulo");
+  infJogadorUm.classList.remove("jogadorVez");
   tabuleiro.classList.remove("x");
   //Faz uma verificação é adiciona uma classe
   if (vezDoCirculo) {
+    infJogadorDois.classList.add("jogadorVez");
     tabuleiro.classList.add("circulo");
   } else {
+    infJogadorUm.classList.add("jogadorVez");
     tabuleiro.classList.add("x");
   }
 };
@@ -137,6 +167,7 @@ function lidarClick(e) {
     mudarJogador();
   }
 };
+
 cadastro();
 
 restartButton.addEventListener("click", cadastro);
