@@ -1,52 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Trabalho de Tópicos avançados</title>
-  </head>
-  <body>
-    <div class="infGame">
-      <div style="display: none" data-inf-game>
-        <div class="conteiner-infGame" data-inf-jogadorUm>
-          <label for="nome-jogadorX">Player 1 (X):</label>
-          <p class="nome-jogadorX" data-nome-jogadorUm></p> 
-        </div>
-        <div class="conteiner-infGame" data-inf-jogadorDois>
-          <label for="nome-jogadorCirculo">Player 2 (O):</label>
-          <p class="nome-jogadorCirculo" data-nome-jogadorDois></p>
-        </div>
-      </div>
-    </div>
-    <div class="tabuleiro" data-tabuleiro>
-      <div class="posicoes" data-posicoes></div>
-      <div class="posicoes" data-posicoes></div>
-      <div class="posicoes" data-posicoes></div>
-      <div class="posicoes" data-posicoes></div>
-      <div class="posicoes" data-posicoes></div>
-      <div class="posicoes" data-posicoes></div>
-      <div class="posicoes" data-posicoes></div>
-      <div class="posicoes" data-posicoes></div>
-      <div class="posicoes" data-posicoes></div>
-    </div>
-    <!--Colocar as divs de mensagens em baixo se não o tabuleiro fica por cima-->
-    <div class="pagina" data-inputName>
-      <div class="text-show">
-        <label for="playerX">Player 1 (X):</label>
-        <input id="playerX" data-inputName-playerUm-text>
-        <label for="playerCirculo">Player 2 (O):</label>
-        <input id="playerCirculo" data-inputName-playerDois-text>   
-      </div>
-    <button class="button" data-cadastro-button onclick="cadastro()">Jogar</button>
-    </div>
-    <div class="pagina" data-pagina-vitoria>
-      <div class="text-show">
-        <label data-texto-mensagem-vitoria></label>
-      </div>
-      <button class="button" data-restart-button>Reiniciar!</button>
-    </div>
-    <script src="scripts.js"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="styles.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<title>Jogo da Velha</title>
+	</head>
+	<body>
+		<div id="game-info" class="holder">
+			<p>É sua vez <span id="current-player-text">[]</span>!</p>
+		</div>
+		<div id="names-input" class="holder">
+			<h1>Jogo da Velha</h1>
+			<div class="name-input-container">
+				<div class="name-input">
+					<label for="player1-name">Jogador 1 (X):</label>
+					<input
+						id="player1-name"
+						name="player1-name"
+						placeholder="Insira seu nome"
+						maxlength="25"
+					/>
+				</div>
+				<div class="name-input">
+					<label for="player2-name">Jogador 2 (O):</label>
+					<input
+						id="player2-name"
+						name="player2-name"
+						placeholder="Insira seu nome"
+						maxlength="25"
+					/>
+				</div>
+			</div>
+			<button id="register-button" onclick="cadastro()">Jogar</button>
+		</div>
+		<div id="winner" class="holder">
+			<p id="winner-text">[] ganhou!</p>
+			<button id="restart-button">Jogar novamente</button>
+		</div>
+		<div id="tabuleiro">
+			<div class="casa"></div>
+			<div class="casa"></div>
+			<div class="casa"></div>
+			<div class="casa"></div>
+			<div class="casa"></div>
+			<div class="casa"></div>
+			<div class="casa"></div>
+			<div class="casa"></div>
+			<div class="casa"></div>
+		</div>
+		<script src="scripts.js"></script>
+	</body>
 </html>

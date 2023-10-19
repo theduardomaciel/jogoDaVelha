@@ -1,178 +1,173 @@
-const posicoesElemento = document.querySelectorAll("[data-posicoes]"); 
-//Seleciona todos as divs que tem essa classe, logo todos os posicoes
-const tabuleiro = document.querySelector("[data-tabuleiro]");
-/*Seleciona todos as divs que tem essa classe, logo todos os tabuleiros
+const casas = document.querySelectorAll(".casa");
+const tabuleiro = document.getElementById("tabuleiro");
 
-Ligação com a mensagem devitporia ou empete*/
-const elementoTextoMensagemVencedor = document.querySelector("[data-texto-mensagem-vitoria]");
-//Seleciona todos as divs que tem essa classe, logo todos os texto-mensagem-vitoria
-const mensagemVitoria = document.querySelector("[data-pagina-vitoria]");
-//Seleciona todos as divs que tem essa classe, logo todos os mensagem-vitoria
-const restartButton = document.querySelector("[data-restart-button]");
-/*Seleciona todos as divs que tem essa classe, logo todos os restart-button
+const namesInputContainer = document.getElementById("names-input");
+const gameInfoContainer = document.getElementById("game-info");
+const winnerContainer = document.getElementById("winner");
 
-Ligação com os inputs de nome*/
-const inputNameTextElement = document.querySelector("[data-inputName]");
-//Seleciona todos as divs que tem essa classe, logo todos os inputName-message-text
-const cadastroButton = document.querySelector("[data-cadastro-button]");
-//Seleciona todos as divs que tem essa classe, logo todos os cadastro-button
+const restartButton = document.getElementById("restart-button");
+const registerButton = document.getElementById("register-button");
 
-const playerX = document.querySelector("[data-nome-jogadorUm]");
-//Seleciona todos as divs que tem essa classe, logo todos os playerX
-const playerCirculo = document.querySelector("[data-nome-jogadorDois]");
-//Seleciona todos as divs que tem essa classe, logo todos os playerCirculo
-const divInfGame = document.querySelector("[data-inf-game]");
-//Seleciona todos as divs que tem essa classe, logo todos os inf-game
-const infJogadorUm = document.querySelector("[data-inf-jogadorUm]");
-//Seleciona todos as divs que tem essa classe, logo todos os inf-jogadorUm
-const infJogadorDois = document.querySelector("[data-inf-jogadorDois]");
-//Seleciona todos as divs que tem essa classe, logo todos os inf-jogadorDois
+let players = {
+	X: "X",
+	O: "O",
+};
 
-let playerUm;
-let playerDois;
-let vezDoCirculo;//É a vez do circulo ?
+let currentPlayer = "X";
 
-const combinacoesVitoria = [
-  /*Combinações que leva um jogador a ganhar,
-   caso nenhuma delas esteja no resultado sera contabilizado empate
-       A  B  C      
-    1.[0, 1, 2]
-    2.[3, 4, 5]
-    3.[6, 7, 8]*/
+const win_combinations = [
+	// Combinações que leva um jogador a ganhar, caso nenhuma delas esteja no resultado, será contabilizado empate
+	/* 
+			A	B	C      
+		1.	[0,	1,	2]
+		2.	[3,	4,	5]
+		3.	[6,	7,	8]
+	*/
 
-  [0, 1, 2],//linha 1
-  [0, 3, 6],//Coluna A
-  [0, 4, 8],//Diagonal principal
-  
-  [1, 4, 7],//Coluna B
-  
-  [2, 5, 8],//Coluna C
-  [2, 4, 6],//Diagonal secundaria
+	[0, 1, 2], // Linha 1
+	[0, 3, 6], // Coluna A
+	[0, 4, 8], // Diagonal principal
 
-  [3, 4, 5],//linha 2
+	[1, 4, 7], // Coluna B
 
-  [6, 7, 8],//linha 3
+	[2, 5, 8], // Coluna C
+	[2, 4, 6], // Diagonal secundaria
 
-];  
-function cadastro(){
-    for (const posicoes of posicoesElemento) {
-      posicoes.classList.remove("circulo");
-      posicoes.classList.remove("x");
-    }
-    //Mostra tela para informar nome dos jogadores
-    inputNameTextElement.classList.add("aparecer");
-    //Quando cadastro for adicionar, mensagem vencedor vai ser remover
-    cadastroButton.addEventListener("click", comecoJogo);
-    playerUm=document.getElementById('playerX').value!==''?document.getElementById('playerX').value:'Jogador X';
-    playerDois=document.getElementById('playerCirculo').value!=''?document.getElementById('playerCirculo').value:'Jogador O';
-    mensagemVitoria.classList.remove("aparecer");
-    //console.log(playerUm , playerDois);
-    mostrarJogadores();
+	[3, 4, 5], // Linha 2
+
+	[6, 7, 8], // Linha 3
+];
+
+function cadastro() {
+	for (const casa of casas) {
+		casa.classList.remove("O");
+		casa.classList.remove("X");
+	}
+
+	namesInputContainer.style.display = "flex";
+
+	players["X"] = document.getElementById("player1-name").value ?? "Jogador 1";
+	players["O"] = document.getElementById("player2-name").value ?? "Jogador 2";
+	winnerContainer.style.display = "none";
+
+	mostrarJogadores();
+
+	registerButton.addEventListener("click", beginGame);
 }
-//Função dedicada a melhorar a jogabiliadade mostrando quem são os jogadores
-function mostrarJogadores(){
-  playerX.textContent=playerUm;
-  playerCirculo.textContent=playerDois;
-  }
+
+// Função dedicada a melhorar a jogabilidade mostrando quem são os jogadores
+function mostrarJogadores() {
+	const currentPlayerName = document.getElementById("current-player-text");
+	currentPlayerName.textContent =
+		players[currentPlayer] + ` (${currentPlayer})`;
+}
+
+const beginGame = () => {
+	gameInfoContainer.style.display = "flex";
+	namesInputContainer.style.display = "none";
+
+	currentPlayer = "X";
+
+	for (const casa of casas) {
+		casa.removeEventListener("click", lidarClick);
+		casa.addEventListener("click", lidarClick, { once: true });
+		//once - responsável por não adicionar uma classe quando já tiver
+	}
+
+	definirHoverDoTabuleiro();
+};
+
+// Mensagem no final do jogo
+function endGame(empate) {
+	const winnerText = document.getElementById("winner-text");
+
+	if (empate) {
+		winnerText.textContent = "Empate!";
+	} else {
+		winnerText.textContent = `O jogador ${players[currentPlayer]} (${currentPlayer}) venceu!`;
+	}
+
+	gameInfoContainer.style.display = "none";
+	winnerContainer.style.display = "flex";
+}
+
+function searchForVictory(jogadorAtual) {
+	return win_combinations.some((combination) => {
+		return combination.every((index) => {
+			return casas[index].classList.contains(jogadorAtual);
+		});
+	});
+}
+
 /*
-function ativarJogador(){
-  playerX.classList.toggle('jogador-ativo');
-  playerCirculo.classList.toggle('jogador-ativo');
+	Arrow functions (funções de seta)
+  	Outra forma de estruturar uma função é a declarando como uma variável:
+    	nome = () => ação 
+  	Geralmente são funções anonimas || Não precisam do igual
+*/
+
+function procurarPorEmpate() {
+	return [...casas].every((casa) => {
+		return casa.classList.contains("X") || casa.classList.contains("O");
+	});
 }
-*/
-const comecoJogo = () => {
-  divInfGame.classList.add("aparecer");
-  vezDoCirculo = false;
-//Para (Instaceia uma variavel) da estrutura que eu quero percorrer [OBS.: for of retorna o valor da possição || for in retorna apenas as posições]
-  for (const posicoes of posicoesElemento) {
-    posicoes.removeEventListener("click", lidarClick);
-    posicoes.addEventListener("click", lidarClick, { once: true });
-    //once - responsavel por não adiconar uma classe quando já tiver
-  }
-  definirHoverDoTabuleiro();
-  //Quando mensagem vencedor for adicionar, cadastro vai ser remover
-  inputNameTextElement.classList.remove("aparecer");
-  mensagemVitoria.classList.remove("aparecer");
-};
-//Mensagem no final do jogo
-function encerraPartida (empate){
-  divInfGame.classList.remove("aparecer");
-  if (empate) {
-    elementoTextoMensagemVencedor.innerText = "Empate!";
-  } else {
-    elementoTextoMensagemVencedor.innerText = vezDoCirculo
-      ? playerDois+" Venceu!"
-      : playerUm+" Venceu!";
-  }
 
-  mensagemVitoria.classList.add("aparecer");
-};
+function alteradorClasse(casa, adicionarClasse) {
+	casa.classList.add(adicionarClasse);
+}
 
-function procurarPorVitoria (jogadorAtual) {
-  return combinacoesVitoria.some((combination) => {
-    return combination.every((index) => {
-      return posicoesElemento[index].classList.contains(jogadorAtual);
-    });
-  });
-};
-/*Arrow functions - funções de seta
-  Outra forma de estruturar uma função é declaranco como variavél:
-        nome = () => ação 
-  Geralmente são funções anonimas || Não precisam do igual
-*/
-function procurarPorEmpate () {
-  return [...posicoesElemento].every((posicoes) => {
-    return posicoes.classList.contains("x") || posicoes.classList.contains("circulo");
-  });
-};
+function definirHoverDoTabuleiro() {
+	const currentPlayerText = document.getElementById("current-player-text");
 
-function alteradorClasse (posicoes, adicionarClasse) {
-  posicoes.classList.add(adicionarClasse);
-};
-//Pesquisar qual a diferença de estrutura
-function definirHoverDoTabuleiro ()  {
-  //Remove a classe anterior antes de adicionar uma nova
-  infJogadorDois.classList.remove("jogadorVez");
-  tabuleiro.classList.remove("circulo");
-  infJogadorUm.classList.remove("jogadorVez");
-  tabuleiro.classList.remove("x");
-  //Faz uma verificação é adiciona uma classe
-  if (vezDoCirculo) {
-    infJogadorDois.classList.add("jogadorVez");
-    tabuleiro.classList.add("circulo");
-  } else {
-    infJogadorUm.classList.add("jogadorVez");
-    tabuleiro.classList.add("x");
-  }
-};
+	gameInfoContainer.classList.add("animate-out");
+
+	const timeout = setTimeout(() => {
+		gameInfoContainer.classList.remove("animate-out");
+		gameInfoContainer.classList.add("animate-in");
+		currentPlayerText.textContent = `${players[currentPlayer]} (${currentPlayer})`;
+		clearTimeout(timeout);
+
+		const timeout2 = setTimeout(() => {
+			gameInfoContainer.classList.remove("animate-in");
+			clearTimeout(timeout2);
+		}, 250);
+	}, 250);
+
+	if (currentPlayer === "X") {
+		tabuleiro.classList.remove("O");
+		tabuleiro.classList.add("X");
+	} else {
+		tabuleiro.classList.remove("X");
+		tabuleiro.classList.add("O");
+	}
+}
 
 const mudarJogador = () => {
-  vezDoCirculo = !vezDoCirculo;
-  definirHoverDoTabuleiro();
+	currentPlayer = currentPlayer === "X" ? "O" : "X";
+	definirHoverDoTabuleiro();
 };
 
 function lidarClick(e) {
-  // Colocar a marca (X ou Círculo)
-  const posicoes = e.target;
-  const adicionarClasse = vezDoCirculo ? "circulo" : "x"; //If e Else; verifica se é a vez do circula é adiciona a calsse corespondente
+	// Colocar a marca (X ou Círculo)
+	const casa = e.target;
 
-  alteradorClasse(posicoes, adicionarClasse); //Chama a função
+	alteradorClasse(casa, currentPlayer); //Chama a função
 
-  // Verificar por vitória
-  const vencedor = procurarPorVitoria(adicionarClasse);
+	// Verificar por vitória
+	const vencedor = searchForVictory(currentPlayer);
 
-  // Verificar por empate
-  const empate = procurarPorEmpate();
+	// Verificar por empate
+	const empate = procurarPorEmpate();
 
-  if (vencedor) {
-    encerraPartida(false);
-  } else if (empate) {
-    encerraPartida(true);
-  } else {
-    // Mudar jogador
-    mudarJogador();
-  }
-};
+	if (vencedor) {
+		endGame(false);
+	} else if (empate) {
+		endGame(true);
+	} else {
+		// Mudar jogador
+		mudarJogador();
+	}
+}
 
 cadastro();
 

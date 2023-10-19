@@ -1,204 +1,357 @@
+:root {
+	/* Variáveis */
+	--cor-primaria: #29a723;
+	--background: #121212;
+	--neutral: #ffffff;
+
+	--tamanho-casa: 5rem;
+	--padding: 2rem;
+}
+
 * {
-  /*Zerando pro margin e padding não influenciar na lagura das coisas*/
-  box-sizing: border-box; 
-  margin: 0;
-  padding: 0;
+	/* Zeramos o margin e o padding para não influenciar na largura dos elementos */
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	background: var(--background); /* Cor da página */
+	width: 100%;
+	height: 100%;
 }
 
 body {
-  height: 95vh; /*Altura total da página*/
-  background:black;/*cor da página*/
+	width: 100%;
+	height: 100%;
+
+	color: var(--neutral);
+	text-align: center;
+
+	background: radial-gradient(
+		50% 50% at 50% 50%,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 0.85) 89.69%
+	);
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	font-family: "Inter", sans-serif;
 }
 
-.tabuleiro {
-  display: grid;
-  width: 100%;
-  height: 87%;
-  /*Centraliza o bord*/
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  /*Centraliza a posicoes*/
-  justify-items: center;
-  align-items: center;
-  grid-template-columns: repeat(3, auto); /*Dá três centrimetros de altura e implementa a largura que precisar*/
+#tabuleiro {
+	display: grid;
+	width: calc(100% - var(--padding) * 2);
+	height: 87%;
+
+	/* Centraliza o tabuleiro */
+	display: grid;
+	justify-content: center;
+	align-content: center;
+
+	/* Em seguida, centralizamos as casas do tabuleiro */
+	/* Com isso, criamos três colunas e damos o espaço necessário para elas automaticamente */
+	justify-items: center;
+	align-items: center;
+	grid-template-columns: repeat(3, auto);
 }
+
+/* Casa do tabuleiro */
+.casa {
+	border: 2px solid var(--cor-primaria); /* Cor das linhas do jogo (as bordas extras serão removidas em seguida) */
+	border-radius: 10px;
+
+	width: var(--tamanho-casa);
+	height: var(--tamanho-casa);
+
+	/* Centraliza os itens dentro do quadrado*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative; /* para que o X e o O possam se posicionar de forma absoluta dentro do quadrado */
+}
+
+/* As células que já tiverem O ou X não vão pode ser selecionadas */
+.casa.X,
+.casa.O {
+	cursor: not-allowed;
+}
+
+/* 
+	nth-child(E):
+	Seleciona um elemento(E) em um grupo (casa)
+*/
+
+/* Removendo as bordas extras do topo */
+.casa:nth-child(1),
+.casa:nth-child(2),
+.casa:nth-child(3) {
+	border-top: none;
+}
+
+/* Removendo as bordas extras da esquerda */
+.casa:nth-child(1),
+.casa:nth-child(4),
+.casa:nth-child(7) {
+	border-left: none;
+}
+
+/* Removendo as bordas extras de baixo */
+.casa:nth-child(7),
+.casa:nth-child(8),
+.casa:nth-child(9) {
+	border-bottom: none;
+}
+
+/* Removendo as bordas extras direita */
+.casa:nth-child(3),
+.casa:nth-child(6),
+.casa:nth-child(9) {
+	border-right: none;
+}
+
+.casa.X::before,/* Perna esquerda*/
+.casa.X::after,/* Perna direita*/
+#tabuleiro.X .casa:not(.X):not(.O):hover::after,
+#tabuleiro.X .casa:not(.X):not(.O):hover::before {
+	/*:not(.X e .O) delimita que as div que já tiverem a classe X ou O não podem receber o hover O)*/
+	content: "";
+	background: var(--cor-primaria);
+
+	/* Seleciona cada área do casa*/
+	height: calc(var(--tamanho-casa) * 0.15); /* 15% da altura */
+	width: calc(var(--tamanho-casa) * 0.9); /* 90% da largura */
+	position: absolute; /* para o .X::before e .X::after não obedecerem ao fluxo da página */
+}
+
+/* Roda o before */
+.casa.X::before,
+#tabuleiro.X .casa:not(.X):not(.O):hover::before {
+	transform: rotate(45deg);
+}
+
+/* Roda o after*/
+.casa.X::after,
+#tabuleiro.X .casa:not(.X):not(.O):hover::after {
+	transform: rotate(-45deg);
+}
+
+/* O */
+.casa.O::after,
+#tabuleiro.O .casa:not(.X):not(.O):hover::after {
+	/*:not(.X e .O) delimita que as div que já tiverem a classe X ou O não podem receber o hover O)*/
+	content: "";
+	border: calc(var(--tamanho-casa) / 10) solid var(--cor-primaria);
+	border-radius: 50%; /* Pra ficar com formato de O */
+
+	position: absolute;
+	height: calc(var(--tamanho-casa) * 0.7); /* 90% da largura */
+	width: calc(var(--tamanho-casa) * 0.7); /* 90% da largura */
+}
+
 /*Faz com que as formas fiquem transparentes no hover*/
-.tabuleiro.x .posicoes:not(.x):not(.circulo):hover::after,
-.tabuleiro.x .posicoes:not(.x):not(.circulo):hover::before,
-.tabuleiro.circulo .posicoes:not(.x):not(.circulo):hover::after,
-.tabuleiro.x .posicoes:not(.x):not(.circulo):hover::before {
-  background: rgb(253 253 253 / 32%) !important; /*!important -- dá prioridade sobre o background do .posicoes*/
+#tabuleiro.X .casa:not(.X):not(.O):hover::after,
+#tabuleiro.X .casa:not(.X):not(.O):hover::before {
+	background: var(
+		--cor-primaria
+	) !important; /*!important -- dá prioridade sobre o background do .casa*/
+	opacity: 0.5;
 }
 
-/* Célula */
-.posicoes {
-  border: 2px solid #73b387; /*Cor das linhas do jogo*/
-
-  width: 100px;
-  height: 100px;
-  /*Centraliza os intems dentro do posicoes*/
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative; /*para o .x/.circulo::before e .x/.circulo::after não obedecerem ao fluxo da página*/
-}
-/*As células que já tiverem circulo ou x não vão pode ser selecionadas*/
-.posicoes.x,.posicoes.circulo {
-  cursor: not-allowed;
-}
-/*nth-child(E) -- selecionar um elemento(E) em um grupo (posicoes)
-Removendo as bordas extras do top*/
-.posicoes:nth-child(1),.posicoes:nth-child(2),.posicoes:nth-child(3) {
-  border-top: none;
-}
-/*Removendo as bordas extras da esquerda*/
-
-.posicoes:nth-child(1),.posicoes:nth-child(4),.posicoes:nth-child(7) {
-  border-left: none;
+#tabuleiro.O .casa:not(.X):not(.O):hover::after {
+	border: calc(var(--tamanho-casa) / 10) solid var(--cor-primaria);
+	opacity: 0.5;
 }
 
-/*Removendo as bordas extras de baixo*/
-.posicoes:nth-child(7),.posicoes:nth-child(8),.posicoes:nth-child(9) {
-  border-bottom: none;
+.holder {
+	display: none; /* Não mostra a mensagem, ele é manipulado dinamicamente com o JS */
+
+	/* Deixamos o elemento fixo na tela */
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	align-items: center;
+	justify-content: center;
+
+	background-color: rgba(0, 0, 0, 0.95);
+
+	width: 100%;
+	height: 100%;
+
+	padding-inline: var(--padding);
 }
 
-/*Removendo as bordas extras direita*/
-.posicoes:nth-child(3),.posicoes:nth-child(6),.posicoes:nth-child(9) {
-  border-right: none;
+#game-info {
+	flex-direction: row;
+	align-items: center;
+	align-self: center;
+
+	background: none;
+	margin-top: 2.5rem;
+
+	height: 10%;
+	width: 100%;
+
+	transform: scale(1);
+	transition: transform 250ms;
 }
 
-/* X 
-Seleciona a clase que tem o x ".posicoes.x" */
-.posicoes.x::before,/* Perna esquerda*/
-.posicoes.x::after,/* Perna Direita*/
-/*Seleciona as divs .tabuleiro (passa a classe x para o tabuleiro e seleciona a posicoes que coresponde ao hover pra mostar)*/
-.tabuleiro.x .posicoes:not(.x):not(.circulo):hover::after,
-.tabuleiro.x .posicoes:not(.x):not(.circulo):hover::before {
-/*:not(.x e .circulo) delimita que as div que já tiverem a classe x ou cirulo não podem receber o hover circulo)*/
-content: "";
-  /*Seleciona tada área do posicoes*/
-  height: calc(100px * 0.15);/*15% da altura*/
-  width: calc(100px * 0.9);/*90% da lagura*/
-  background: #73b387;
-  position: absolute;/*para o .x::before e .x::after não obedecerem ao fluxo da página com a implementação da linha 45*/
+#game-info p {
+	padding: 1rem;
+	border-radius: 0.5rem;
+
+	color: #ffffff;
+	background-color: var(--background);
+	border: 1px solid var(--neutral);
+
+	text-align: center;
+	font-size: 1.8rem;
+	font-weight: 600;
 }
 
-/*Roda o before*/
-.posicoes.x::before,
-/*Seleciona as divs .tabuleiro (passa a classe x para o tabuleiro e seleciona a posicoes que coresponde ao hover pra mostar)*/
-.tabuleiro.x .posicoes:not(.x):not(.circulo):hover::before {
-  transform: rotate(45deg);
-}
-/*Roda o after*/
-.posicoes.x::after,
-/*Seleciona as divs .tabuleiro (passa a classe x para o tabuleiro e seleciona a posicoes que coresponde ao hover pra mostar)*/
-.tabuleiro.x .posicoes:not(.x):not(.circulo):hover::after {
-  transform: rotate(-45deg);
+#game-info.animate-out {
+	transform: scale(0);
 }
 
-/* circulo 
-Seleciona as divs .posicoes*/
-.posicoes.circulo::before,
-.posicoes.circulo::after,
-/*Seleciona as divs .tabuleiro (passa a classe circulo para o tabuleiro e seleciona a posicoes que coresponde ao hover pra mostar)*/
-.tabuleiro.circulo .posicoes:not(.x):not(.circulo):hover::after,
-.tabuleiro.circulo .posicoes:not(.x):not(.circulo):hover::after {
-/*:not(.x e .circulo) delimita que as div que já tiverem a classe x ou cirulo não podem receber o hover circulo)*/
-  content: "";
-  height: calc(100px * 0.9);/*90% da lagura*/
-  width: calc(100px * 0.9);/*90% da lagura*/
-  background: #73b387;
-  position: absolute;/*para o .circulo::before e .circulo::after não obedecerem ao fluxo da página com a implementação da linha 45*/
-  border-radius: 50%;/*Pra ficar com formato de circulo*/
+#game-info.animate-in {
+	transform: scale(1);
 }
-.infGame {
-  height: 10%;
-  justify-content: space-evenly;
-  margin: 1rem;
+
+button {
+	font-family: "Inter";
+	font-weight: 700;
+	font-size: 2.5rem;
+	cursor: pointer;
+
+	background-color: var(--cor-primaria);
+	color: var(--neutral);
+
+	/* Estilização da borda */
+	border-radius: 5px;
+	border: none;
+
+	/* Estilização do espaço interno do botão */
+	padding: 0.75rem 2.5rem;
+	max-width: 100%;
+
+	transition: background-color 0.2s;
 }
-.conteiner-infGame{
-  width: 100%;
-  text-align: center;
-  color: #ffffff;
-  font-size: 1.8rem;
-  font-weight: 600;
-  font-family: "SF Pro Display","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
+
+button:hover {
+	color: var(--cor-primaria);
+	background-color: var(--neutral);
+
+	outline-offset: 2px;
+	outline: 2px solid var(--neutral);
 }
+
+/* Texto que obtém os nomes dos jogadores */
+#names-input {
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	text-align: center;
+	font-weight: 600;
+	color: #ffffff;
+	font-size: 2.5rem;
+
+	gap: 2.5rem;
+
+	z-index: 1000;
+}
+
+#names-input h1 {
+	font-size: 2.5rem;
+}
+
+#names-input .name-input {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-items: start;
+
+	background-color: var(--neutral);
+	border-radius: 0.5rem;
+
+	color: black;
+
+	padding: 0.5rem;
+	gap: 0rem;
+}
+
+.name-input label {
+	font-size: 2rem;
+}
+
+.name-input input {
+	font-family: "Inter";
+	text-align: center;
+	font-weight: 600;
+	font-size: 1.5rem;
+
+	background-color: black;
+	color: var(--neutral);
+	border: 2px solid var(--neutral);
+
+	width: 100%;
+	padding: 1rem 0.6rem;
+	margin-top: 16px;
+
+	border-radius: 5px;
+}
+
+.name-input input:focus {
+	outline-offset: 0px;
+	outline: 3px solid black;
+}
+
+.name-input-container {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+
+	transition: 500ms linear;
+}
+
 /* Mensagem de Vitória */
-.pagina {
-  display: none;/*Não mostra a mensagem, ele é manipulado dinamicamente com o JS*/
-  /*Faz com que a mensagem vá para a frente de todo o arquivo*/
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /*Centraliza tudo*/
-  justify-content: center;
-  align-items: center;
-  /*Dá aquela tela cinza no fundo da mensagem*/
-  background-color: rgb(5 45 24 / 58%);
-  /*Faz com que os itens fiquem um em cima do outro*/
-  flex-direction: column;
+#winner {
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	background-color: rgba(0, 0, 0, 0.5);
+
+	gap: 2.5rem;
+	z-index: 1000;
 }
-/*Hover do botão*/
-.button:hover {
-  color: #73b387;
-  background-color: #ffffff;
+
+#winner p {
+	color: #ffffff;
+	font-weight: 700;
+	font-size: 2.5rem;
+	width: 90%;
 }
-/*Texto do resultado do jogo*/
-.texto-mensagem-vitoria {
-  color: #ffffff; /*Cor da letra*/
-  font-size: 5rem; /*Tamanho da letra*/
-  font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; /*Fonte da letra*/
-}
-/*StasMensage
-Botão da mensagem de star*/
-.button {
-  font-size: 2.5rem;/*Tamanho do botão*/
-  background-color: #73b387; /*Cor de fundo do botão*/
-  color: #ffffff; /*Cor do texto que é exibido*/
-  cursor: pointer;
-  /*Estilização da borda*/
-  border-radius: 5px;
-  border: none;
-  /*Eslitização do espaço interno do texto*/
-  padding: 10px 15px;
-  margin-top: 16px;
-}
-/*Texto que pega os nomes dos jogadores*/
-.text-show {
-  width: 100%;
-  text-align: center;
-  font-weight: 600;
-  display: grid;
-  justify-items: center;
-  color: #ffffff; /*Cor da letra*/
-  font-size: xxx-large; /*Tamanho da letra*/
-  font-family: "SF Pro Text","SF Pro Icons","Helvetica Neue","Helvetica","Arial",sans-serif; /*Fonte da letra*/
-}
-.pagina input{
-  text-align:center;
-  font-weight: 600;
-  color: #ffffff;
-  width: 280px;
-  font-size: 2.5rem;
-  border-radius: 5px;
-  border: none;
-  padding: 10px 15px;
-  margin-top: 16px;
-  background-color:rgb(253 253 253 / 32%);
-}
-.aparecer {
-  display: flex !important;
-  transition: 500ms linear;
-}
-.jogadorVez{
-  transition: 500ms linear;
-  color: #00ff50;
-  border-radius: 10cm;
-  background: rgb(83 100 91);
-  height: fit-content;
-  box-shadow: 2px 1px 20px 3px rgb(253 253 253 / 32%);
+
+@media (min-width: 1024px) {
+	:root {
+		--tamanho-casa: 6.5rem;
+	}
+
+	.name-input-container {
+		flex-direction: row;
+	}
+
+	#winner p {
+		width: 75%;
+	}
 }
